@@ -1,0 +1,6 @@
+{
+  "arch": "tiny_cnn",
+  "num_classes": 29,
+  "img_size": 64,
+  "quantization": "PTQ static INT8 (FX graph mode, fbgemm backend)"
+}

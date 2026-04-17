@@ -1,0 +1,11 @@
+{
+  "arch": "mobilenetv2_025",
+  "img_size": 64,
+  "num_classes": 29,
+  "val_loss": 0.060768971431806124,
+  "val_accuracy": 0.980919540229885,
+  "best_val_accuracy": 0.9926436781609196,
+  "epochs_trained": 20,
+  "params": 275117,
+  "device": "cuda"
+}
