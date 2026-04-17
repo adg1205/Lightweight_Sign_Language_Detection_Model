@@ -10,8 +10,8 @@ pip install -r requirements.txt
 
 ## 2) Preprocess dataset (64x64 grayscale)
 
-Before preprocessing dataset, download the dataset from Kaggle using the link given: https://www.kaggle.com/datasets/grassknoted/asl-alphabet\
-Rename folder as dataset.
+Before preprocessing dataset, download the dataset from Kaggle using the link given: https://www.kaggle.com/datasets/grassknoted/asl-alphabet  
+Rename the folder as dataset.
 
 This creates:
 - `processed/train/<class>/*.png`
