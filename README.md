@@ -84,8 +84,10 @@ Test set format is a flat folder of 28 files (for example `A_test.jpg`).
 
 | Model | Float checkpoint size | INT8 checkpoint size |
 |---|---:|---:|
-| Tiny CNN | 23.53 KB (`models/tiny_cnn/best_model.pt`) | 41.78 KB (`models/tiny_cnn/model_int8.pt`) |
-| MobileNetV2 alpha=0.25 | 1224.24 KB (`models/mobilenetv2_025/best_model.pt`) | 474.13 KB (`models/mobilenetv2_025/model_int8.pt`) |
+| Tiny CNN | 24,098 bytes (23.53 KB) (`models/tiny_cnn/best_model.pt`) | 42,782 bytes (41.78 KB) (`models/tiny_cnn/model_int8.pt`) |
+| MobileNetV2 alpha=0.25 | 1,253,624 bytes (1224.24 KB) (`models/mobilenetv2_025/best_model.pt`) | 485,510 bytes (474.13 KB) (`models/mobilenetv2_025/model_int8.pt`) |
+
+Note: for very small models like Tiny CNN, the serialized TorchScript container and quantization metadata can outweigh weight-size savings, so the `.pt` file can become larger after PTQ even though arithmetic is INT8.
 
 ## Notes for 512 KB RAM / 1 MB Flash
 
