@@ -1,0 +1,14 @@
+{
+  "arch": "mcuformer_lite",
+  "img_size": 64,
+  "num_classes": 29,
+  "val_accuracy_float": 0.9903448275862069,
+  "val_accuracy_int8": 0.9557471264367816,
+  "val_accuracy_drop": 0.034597701149425286,
+  "test_accuracy_int8": 1.0,
+  "test_samples": 28,
+  "params": 24845,
+  "float_size_bytes": 111394,
+  "int8_size_bytes": 86794,
+  "estimated_peak_activation_kb": 354.46484375
+}

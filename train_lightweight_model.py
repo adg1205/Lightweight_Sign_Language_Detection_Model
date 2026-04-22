@@ -66,6 +66,57 @@ class MobileNetV2Gray(nn.Module):
         return self.model(x)
 
 
+class MCUFormerLiteBlock(nn.Module):
+    def __init__(self, channels: int, expansion: int = 2) -> None:
+        super().__init__()
+        hidden = channels * expansion
+        self.token_mixer = nn.Sequential(
+            nn.Conv2d(channels, channels, kernel_size=3, padding=1, groups=channels),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels, channels, kernel_size=1),
+            nn.ReLU(inplace=True),
+        )
+        self.channel_mixer = nn.Sequential(
+            nn.Conv2d(channels, hidden, kernel_size=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(hidden, channels, kernel_size=1),
+        )
+        self.act = nn.ReLU(inplace=True)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = x + self.token_mixer(x)
+        x = x + self.channel_mixer(x)
+        return self.act(x)
+
+
+class MCUFormerLite(nn.Module):
+    def __init__(self, num_classes: int) -> None:
+        super().__init__()
+        self.stem = nn.Sequential(
+            nn.Conv2d(1, 24, kernel_size=3, stride=2, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(24, 32, kernel_size=3, stride=2, padding=1),
+            nn.ReLU(inplace=True),
+        )
+        self.blocks = nn.Sequential(
+            MCUFormerLiteBlock(32, expansion=2),
+            nn.MaxPool2d(kernel_size=2),
+            MCUFormerLiteBlock(32, expansion=2),
+            nn.MaxPool2d(kernel_size=2),
+            MCUFormerLiteBlock(32, expansion=2),
+        )
+        self.head = nn.Sequential(
+            nn.AdaptiveAvgPool2d((1, 1)),
+            nn.Flatten(),
+            nn.Linear(32, num_classes),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.stem(x)
+        x = self.blocks(x)
+        return self.head(x)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Train a lightweight CNN/MobileNet model for ASL classification (PyTorch)."
@@ -78,7 +129,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--arch",
         type=str,
-        choices=["tiny_cnn", "mobilenetv2_025"],
+        choices=["tiny_cnn", "mobilenetv2_025", "mcuformer_lite"],
         default="tiny_cnn",
         help="Model architecture.",
     )
@@ -123,7 +174,9 @@ def get_device(require_gpu: bool = False) -> torch.device:
 def build_model(arch: str, num_classes: int) -> nn.Module:
     if arch == "tiny_cnn":
         return TinyASLCNN(num_classes=num_classes)
-    return MobileNetV2Gray(num_classes=num_classes, alpha=0.25)
+    if arch == "mobilenetv2_025":
+        return MobileNetV2Gray(num_classes=num_classes, alpha=0.25)
+    return MCUFormerLite(num_classes=num_classes)
 
 
 def get_transforms(img_size: int):
