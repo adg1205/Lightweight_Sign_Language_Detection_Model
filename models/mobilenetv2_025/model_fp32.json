@@ -1,0 +1,8 @@
+{
+  "arch": "mobilenetv2_025",
+  "num_classes": 29,
+  "img_size": 64,
+  "checkpoint": "models\\mobilenetv2_025\\final_model.pt",
+  "format": "ONNX fp32",
+  "opset": 13
+}

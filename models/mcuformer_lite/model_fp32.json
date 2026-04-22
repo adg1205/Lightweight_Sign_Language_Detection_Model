@@ -1,0 +1,8 @@
+{
+  "arch": "mcuformer_lite",
+  "num_classes": 29,
+  "img_size": 64,
+  "checkpoint": "models\\mcuformer_lite\\final_model.pt",
+  "format": "ONNX fp32",
+  "opset": 13
+}

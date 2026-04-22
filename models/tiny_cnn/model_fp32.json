@@ -1,0 +1,8 @@
+{
+  "arch": "tiny_cnn",
+  "num_classes": 29,
+  "img_size": 64,
+  "checkpoint": "models\\tiny_cnn\\final_model.pt",
+  "format": "ONNX fp32",
+  "opset": 13
+}
