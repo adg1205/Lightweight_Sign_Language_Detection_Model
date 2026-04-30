@@ -91,6 +91,16 @@ Test set format is a flat folder of 28 files in `processed/test` (for example `A
 
 Note: for very small models like Tiny CNN, the serialized TorchScript container and quantization metadata can outweigh weight-size savings, so the `.pt` file can become larger after PTQ even though arithmetic is INT8.
 
+### ONNX Runtime INT8 (MCUFormer-lite)
+
+Using ONNX Runtime static quantization (500 calibration samples) on the FP32 ONNX model:
+
+- Validation accuracy: 0.975977 (97.60%)
+- Test accuracy: 0.964286 (96.43%) on 28 samples
+- INT8 ONNX size: 52,823 bytes (51.59 KB)
+- Artifact: [models/mcuformer_lite/model_int8_ort_calib500.onnx](models/mcuformer_lite/model_int8_ort_calib500.onnx)
+- Metrics: [models/mcuformer_lite/model_int8_ort_calib500.json](models/mcuformer_lite/model_int8_ort_calib500.json)
+
 ## Notes for 512 KB RAM / 1 MB Flash
 
 - Use `tiny_cnn` first.

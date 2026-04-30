@@ -1,0 +1,14 @@
+{
+  "arch": "mcuformer_lite",
+  "img_size": 64,
+  "num_classes": 29,
+  "val_accuracy_int8_onnx": 0.9759770114942529,
+  "test_accuracy_int8_onnx": 0.9642857142857143,
+  "test_samples": 28,
+  "int8_onnx_size_bytes": 52823,
+  "quant_tool": "onnxruntime.quantization.quantize_static",
+  "quant_format": "QOperator",
+  "activation_type": "QUInt8",
+  "weight_type": "QInt8",
+  "calib_samples": 500
+}
